@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recrutamento de Candidatos</title>
+</head>
+<body>
+    <h1>Recrutamento de Candidatos</h1>
+
+    <button onclick="cadastrarCandidato()">Cadastrar Candidato</button>
+
+    <script>
+        let candidatos = [];
+        let idadeTotal = 0;
+        let totalCandidatos = 0;
+        let totalHomens = 0;
+        let totalMulheres = 0;
+
+        function cadastrarCandidato() {
+            const numeroCandidato = parseInt(prompt("Digite o número do candidato:"));
+            const idade = parseInt(prompt("Digite a idade do candidato:"));
+            const sexo = prompt("Digite o sexo do candidato (M para masculino ou F para feminino):");
+            const experiencia = prompt("O candidato possui experiência profissional? (Sim/Não):");
+
+            const candidato = {
+                numero: numeroCandidato,
+                idade: idade,
+                sexo: sexo,
+                experiencia: experiencia
+            };
+
+            candidatos.push(candidato);
+
+            idadeTotal += idade;
+            totalCandidatos++;
+
+            if (sexo === "M") {
+                totalHomens++;
+            } else if (sexo === "F") {
+                totalMulheres++;
+            }
+
+            exibirEstatisticas();
+        }
+
+        function exibirEstatisticas() {
+            document.getElementById("estatisticas").innerHTML = `
+                Idade Média dos Candidatos: ${(idadeTotal / totalCandidatos).toFixed(2)}
+                <br>
+                Total de Candidatos: ${totalCandidatos}
+                <br>
+                Total de Homens: ${totalHomens}
+                <br>
+                Total de Mulheres: ${totalMulheres}
+                <br>
+                Candidatos Maiores de Idade com Experiência: ${getCandidatosMaioresDeIdadeComExperiencia()}
+            `;
+        }
+
+        function getCandidatosMaioresDeIdadeComExperiencia() {
+            const candidatosMaioresDeIdadeComExperiencia = candidatos.filter(function(candidato) {
+                return candidato.idade >= 18 && candidato.experiencia === "Sim";
+            });
+
+            return candidatosMaioresDeIdadeComExperiencia.length;
+        }
+    </script>
+
+    <div id="estatisticas">
+        <p>Estatísticas:</p>
+    </div>
+</body>
+</html>
